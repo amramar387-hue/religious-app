@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2c786c">>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيق الأسئلة الدينية | نور الإيمان</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&family=Amiri:wght@400;700&display=swap">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🕌</text></svg>">
+</head>
+<body>
+    <!-- شاشة التحميل -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="mosque-icon">
+                <i class="fas fa-mosque"></i>
+            </div>
+            <div class="loading-text">يتم التحميل...</div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة تسجيل الدخول -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="logo">
+                    <i class="fas fa-mosque"></i>
+                    <h1>نور <span>الإيمان</span></h1>
+                </div>
+                <p class="app-description">تطبيق الأسئلة الدينية ومواقيت الصلاة</p>
+            </div>
+            
+            <div class="login-body">
+                <div class="welcome-text">
+                    <h2>مرحباً بك</h2>
+                    <p>سجل دخولك للاستفادة من جميع ميزات التطبيق</p>
+                </div>
+                
+                <div class="login-options">
+                    <button class="login-btn facebook-login" id="facebookLogin">
+                        <i class="fab fa-facebook-f"></i>
+                        <span>تسجيل الدخول بفيسبوك</span>
+                    </button>
+                    
+                    <button class="login-btn google-login" id="googleLogin">
+                        <i class="fab fa-google"></i>
+                        <span>تسجيل الدخول بجوجل</span>
+                    </button>
+                    
+                    <div class="divider">
+                        <span>أو</span>
+                    </div>
+                    
+                    <button class="login-btn guest-login" id="guestLogin">
+                        <i class="fas fa-user"></i>
+                        <span>الدخول كزائر</span>
+                    </button>
+                </div>
+                
+                <div class="terms">
+                    <p>بالدخول أنت توافق على <a href="#">شروط الاستخدام</a> و <a href="#">سياسة الخصوصية</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- الواجهة الرئيسية -->
+    <div class="main-app" id="mainApp">
+        <!-- الهيدر -->
+        <header class="app-header">
+            <div class="header-left">
+                <button class="menu-btn" id="menuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="app-logo">
+                    <i class="fas fa-mosque"></i>
+                    <span>نور الإيمان</span>
+                </div>
+            </div>
+            
+            <div class="header-center">
+                <div class="date-display" id="currentDate"></div>
+            </div>
+            
+            <div class="header-right">
+                <button class="notification-btn" id="notificationBtn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+                <div class="user-profile" id="userProfile">
+                    <img src="https://ui-avatars.com/api/?name=مستخدم&background=2c786c&color=fff" alt="صورة المستخدم">
+                </div>
+            </div>
+        </header>
+
+        <!-- القائمة الجانبية -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="user-info">
+                    <img src="https://ui-avatars.com/api/?name=مستخدم&background=2c786c&color=fff" alt="صورة المستخدم">
+                    <div class="user-details">
+                        <h3 id="userName">مستخدم</h3>
+                        <p id="userEmail">مستخدم زائر</p>
+                    </div>
+                </div>
+                <button class="close-sidebar" id="closeSidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active"><a href="#home"><i class="fas fa-home"></i> الرئيسية</a></li>
+                    <li><a href="#questions"><i class="fas fa-question-circle"></i> الأسئلة اليومية</a></li>
+                    <li><a href="#prayer"><i class="fas fa-clock"></i> مواقيت الصلاة</a></li>
+                    <li><a href="#qibla"><i class="fas fa-compass"></i> اتجاه القبلة</a></li>
+                    <li><a href="#azkar"><i class="fas fa-book-open"></i> الأذكار والأدعية</a></li>
+                    <li><a href="#quran"><i class="fas fa-quran"></i> القرآن الكريم</a></li>
+                    <li><a href="#settings"><i class="fas fa-cog"></i> الإعدادات</a></li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                </button>
+            </div>
+        </div>
+
+        <!-- المحتوى الرئيسي -->
+        <main class="main-content">
+            <!-- الذكر اليومي -->
+            <section class="daily-reminder-section" id="home">
+                <div class="section-header">
+                    <h2><i class="fas fa-quote-right"></i> الذكر اليومي</h2>
+                    <button class="refresh-btn" id="refreshReminder">
+                        <i class="fas fa-redo"></i>
+                    </button>
+                </div>
+                <div class="reminder-card">
+                    <div class="reminder-icon">
+                        <i class="fas fa-star-and-crescent"></i>
+                    </div>
+                    <div class="reminder-content">
+                        <p class="reminder-text" id="reminderText">اللهم إني أسألك علماً نافعاً، ورزقاً طيباً، وعملاً متقبلاً</p>
+                        <p class="reminder-source" id="reminderSource">دعاء الرسول صلى الله عليه وسلم</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- الأقسام الرئيسية -->
+            <div class="sections-grid">
+                <!-- قسم الأسئلة اليومية -->
+                <section class="section-card" id="questions">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <h3>الأسئلة اليومية</h3>
+                        <span class="card-badge">جديد</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="daily-question">
+                            <h4>سؤال اليوم</h4>
+                            <p class="question-text" id="dailyQuestion">ما هي أركان الإسلام الخمسة؟</p>
+                            <div class="question-options">
+                                <button class="option-btn">عرض الإجابة</button>
+                                <button class="option-btn">أسئلة سابقة</button>
+                            </div>
+                        </div>
+                        <div class="question-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-question"></i>
+                                <span>١٥ سؤال</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>١٠ إجابات</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- قسم مواقيت الصلاة -->
+                <section class="section-card" id="prayer">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>مواقيت الصلاة</h3>
+                        <span class="card-badge" id="nextPrayer">الظهر بعد ٢ س</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="prayer-times">
+                            <div class="prayer-time-item current">
+                                <div class="prayer-info">
+                                    <i class="fas fa-sun"></i>
+                                    <span class="prayer-name">الفجر</span>
+                                </div>
+                                <span class="prayer-time">٤:٣٠ ص</span>
+                            </div>
+                            <div class="prayer-time-item">
+                                <div class="prayer-info">
+                                    <i class="fas fa-sun"></i>
+                                    <span class="prayer-name">الشروق</span>
+                                </div>
+                                <span class="prayer-time">٥:٤٥ ص</span>
+                            </div>
+                            <div class="prayer-time-item next">
+                                <div class="prayer-info">
+                                    <i class="fas fa-sun"></i>
+                                    <span class="prayer-name">الظهر</span>
+                                </div>
+                                <span class="prayer-time">١٢:١٥ م</span>
+                            </div>
+                            <div class="prayer-time-item">
+                                <div class="prayer-info">
+                                    <i class="fas fa-sun"></i>
+                                    <span class="prayer-name">العصر</span>
+                                </div>
+                                <span class="prayer-time">٣:٤٥ م</span>
+                            </div>
+                            <div class="prayer-time-item">
+                                <div class="prayer-info">
+                                    <i class="fas fa-moon"></i>
+                                    <span class="prayer-name">المغرب</span>
+                                </div>
+                                <span class="prayer-time">٦:٣٠ م</span>
+                            </div>
+                            <div class="prayer-time-item">
+                                <div class="prayer-info">
+                                    <i class="fas fa-moon"></i>
+                                    <span class="prayer-name">العشاء</span>
+                                </div>
+                                <span class="prayer-time">٨:٠٠ م</span>
+                            </div>
+                        </div>
+                        <div class="location-info">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>بغداد, العراق</span>
+                            <button class="change-location">تغيير</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- قسم اتجاه القبلة -->
+                <section class="section-card" id="qibla">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-compass"></i>
+                        </div>
+                        <h3>اتجاه القبلة</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="qibla-direction">
+                            <div class="compass-container">
+                                <div class="compass">
+                                    <div class="compass-ring">
+                                        <div class="direction">N</div>
+                                        <div class="direction">E</div>
+                                        <div class="direction">S</div>
+                                        <div class="direction">W</div>
+                                    </div>
+                                    <div class="compass-needle">
+                                        <div class="needle"></div>
+                                        <div class="qibla-indicator">
+                                            <i class="fas fa-kaaba"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="qibla-info">
+                                <p>اتجاه القبلة: <strong>جنوب شرق</strong></p>
+                                <p>الزاوية: <strong>١١٥°</strong></p>
+                            </div>
+                            <button class="qibla-btn" id="findQibla">
+                                <i class="fas fa-location-arrow"></i> تحديد اتجاه القبلة
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- قسم الأذكار -->
+                <section class="section-card" id="azkar">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <h3>أذكار الصباح</h3>
+                        <span class="card-badge">٣/٣٠</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="azkar-content">
+                            <div class="zekr-item">
+                                <p>أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ</p>
+                                <div class="zekr-meta">
+                                    <span class="zekr-count">١ مرة</span>
+                                    <button class="zekr-done">
+                                        <i class="far fa-check-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="zekr-item">
+                                <p>اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ</p>
+                                <div class="zekr-meta">
+                                    <span class="zekr-count">١٠ مرات</span>
+                                    <button class="zekr-done">
+                                        <i class="far fa-check-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="show-more">عرض المزيد</button>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- التنقل السفلي -->
+        <nav class="bottom-nav">
+            <a href="#home" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+            </a>
+            <a href="#questions" class="nav-item">
+                <i class="fas fa-question-circle"></i>
+                <span>أسئلة</span>
+            </a>
+            <a href="#prayer" class="nav-item">
+                <i class="fas fa-clock"></i>
+                <span>صلاة</span>
+            </a>
+            <a href="#qibla" class="nav-item">
+                <i class="fas fa-compass"></i>
+                <span>قبلة</span>
+            </a>
+            <a href="#azkar" class="nav-item">
+                <i class="fas fa-book-open"></i>
+                <span>أذكار</span>
+            </a>
+        </nav>
+
+        <!-- الفوتر -->
+        <footer class="app-footer">
+            <div class="developer-info">
+                <div class="developer-card">
+                    <div class="developer-header">
+                        <h3><i class="fas fa-code"></i> منشئ ومبرمج التطبيق</h3>
+                    </div>
+                    <div class="developer-body">
+                        <div class="developer-name">
+                            <i class="fas fa-user-tie"></i>
+                            <h4>المهندس عامر عمران</h4>
+                        </div>
+                        <p class="developer-bio">مطور ويب ومصمم واجهات مستخدم متخصص في التطبيقات الدينية</p>
+                        
+                        <div class="whatsapp-contact">
+                            <div class="whatsapp-icon-animation">
+                                <div class="whatsapp-icon">
+                                    <i class="fab fa-whatsapp"></i>
+                                </div>
+                                <div class="ripple"></div>
+                                <div class="ripple delay-1"></div>
+                                <div class="ripple delay-2"></div>
+                            </div>
+                            
+                            <div class="whatsapp-number">
+                                <i class="fas fa-phone-alt"></i>
+                                <span>07506619617</span>
+                            </div>
+                            
+                            <p class="contact-text">للتواصل عبر واتساب للاستفسارات أو تطوير التطبيقات</p>
+                            
+                            <a href="https://wa.me/9647506619617" class="whatsapp-btn" target="_blank">
+                                <i class="fab fa-whatsapp"></i>
+                                ابدأ محادثة واتساب
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="copyright">
+                    <p>© 2023 تطبيق نور الإيمان. جميع الحقوق محفوظة.</p>
+                    <p>تصميم وبرمجة: عامر عمران</p>
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- الإشعارات -->
+    <div class="notifications-panel" id="notificationsPanel">
+        <div class="notifications-header">
+            <h3>الإشعارات</h3>
+            <button class="close-notifications" id="closeNotifications">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="notifications-list">
+            <div class="notification-item">
+                <div class="notification-icon">
+                    <i class="fas fa-pray"></i>
+                </div>
+                <div class="notification-content">
+                    <p>حان وقت صلاة الظهر</p>
+                    <span>منذ ٥ دقائق</span>
+                </div>
+            </div>
+            <div class="notification-item">
+                <div class="notification-icon">
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <div class="notification-content">
+                    <p>سؤال جديد متاح للإجابة</p>
+                    <span>منذ ساعة</span>
+                </div>
+            </div>
+            <div class="notification-item">
+                <div class="notification-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="notification-content">
+                    <p>ذكر جديد متاح للقراءة</p>
+                    <span>منذ يوم</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- النصوص الدينية -->
+    <script>
+        // نصوص للذكر اليومي
+        const dailyReminders = [
+            {text: "اللهم إني أسألك علماً نافعاً، ورزقاً طيباً، وعملاً متقبلاً", source: "دعاء الرسول صلى الله عليه وسلم"},
+            {text: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ", source: "سورة البقرة - الآية 201"},
+            {text: "اللهم أصلح لي ديني الذي هو عصمة أمري، وأصلح لي دنياي التي فيها معاشي", source: "دعاء مأثور"},
+            {text: "حسبي الله لا إله إلا هو، عليه توكلت وهو رب العرش العظيم", source: "سورة التوبة - الآية 129"},
+            {text: "من قال سبحان الله وبحمده، غرست له نخلة في الجنة", source: "حديث شريف"},
+            {text: "اللهم أعني على ذكرك وشكرك وحسن عبادتك", source: "دعاء مأثور"},
+            {text: "لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير", source: "كلمة التوحيد"},
+            {text: "اللهم اغفر لي وارحمني واهدني وارزقني وعافني", source: "دعاء جامع"}
+        ];
+
+        // أسئلة يومية
+        const dailyQuestions = [
+            "ما هي أركان الإسلام الخمسة؟",
+            "ما الفرق بين السور المكية والمدنية؟",
+            "ما هي أركان الإيمان؟",
+            "كم عدد سور القرآن الكريم؟",
+            "ما هي أعظم سورة في القرآن؟",
+            "ما هو حديث الرسول صلى الله عليه وسلم عن النية؟",
+            "ما هي شروط الصلاة؟",
+            "ما هي مبطلات الصيام؟",
+            "ما فضل قراءة القرآن؟",
+            "ما هي صفات المؤمن الحق؟"
+        ];
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>
